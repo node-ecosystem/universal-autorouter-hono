@@ -1,0 +1,60 @@
+{
+  "name": "universal-autorouter",
+  "version": "0.2.4",
+  "license": "MIT",
+  "type": "module",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "types": "./dist/index.d.mts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-ecosystem/universal-autorouter.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsx ./start.ts",
+    "lint": "eslint src/**/*.ts",
+    "test": "tsx ./test/index.test.ts",
+    "build": "pkgroll",
+    "prepublishOnly": "yarn build",
+    "od": "yarn outdated"
+  },
+  "devDependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@types/bun": "^1.1.14",
+    "@types/node": "^22.10.5",
+    "@yarnpkg/sdks": "^3.2.0",
+    "eslint": "^9.17.0",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "hono": "^4.6.16",
+    "pkgroll": "2.5.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.1",
+    "vite": "^6.0.7"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "autoload",
+    "cross-platform",
+    "directory",
+    "fast",
+    "filesystem",
+    "http",
+    "http-server",
+    "lightweight",
+    "microws",
+    "middleware",
+    "plugin",
+    "router",
+    "proxy-protocol"
+  ],
+  "packageManager": "yarn@4.6.0"
+}
