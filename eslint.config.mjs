@@ -10,6 +10,7 @@ export default pluginTypescript.config(
       'semi': [1, 'never'],
 
       '@typescript-eslint/no-explicit-any': 0,
+      '@typescript-eslint/no-unsafe-function-type': 0,
       '@typescript-eslint/no-unused-vars': [1, { argsIgnorePattern: '^_' }],
 
       'unicorn/empty-brace-spaces': 0,

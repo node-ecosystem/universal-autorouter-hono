@@ -3773,9 +3773,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"universal-autorouter@workspace:.":
+"universal-autorouter-hono@workspace:.":
   version: 0.0.0-use.local
-  resolution: "universal-autorouter@workspace:."
+  resolution: "universal-autorouter-hono@workspace:."
   dependencies:
     "@hono/node-server": "npm:^1.13.7"
     "@types/bun": "npm:^1.1.14"
@@ -3788,9 +3788,20 @@ __metadata:
     tsx: "npm:^4.19.2"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.19.1"
+    universal-autorouter: "npm:^0.2.5"
     vite: "npm:^6.0.7"
+  peerDependencies:
+    hono: "*"
+    universal-autorouter: "*"
   languageName: unknown
   linkType: soft
+
+"universal-autorouter@npm:^0.2.5":
+  version: 0.2.5
+  resolution: "universal-autorouter@npm:0.2.5"
+  checksum: 10c0/90415a9b191827fef63037c6518ef6e9aea31afd013b5097688dd2f58aedc2011bb3bb1ef2215e75d2ae6b4076671690454f610849389534ff2b733ba3d5e3b6
+  languageName: node
+  linkType: hard
 
 "update-browserslist-db@npm:^1.1.1":
   version: 1.1.1

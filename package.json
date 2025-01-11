@@ -1,5 +1,5 @@
 {
-  "name": "universal-autorouter",
+  "name": "universal-autorouter-hono",
   "version": "0.2.4",
   "license": "MIT",
   "type": "module",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/node-ecosystem/universal-autorouter.git"
+    "url": "git+https://github.com/node-ecosystem/universal-autorouter-hono.git"
   },
   "files": [
     "dist"
@@ -19,10 +19,13 @@
   "scripts": {
     "dev": "tsx ./start.ts",
     "lint": "eslint src/**/*.ts",
-    "test": "tsx ./test/index.test.ts",
     "build": "pkgroll",
     "prepublishOnly": "yarn build",
     "od": "yarn outdated"
+  },
+  "peerDependencies": {
+    "hono": "*",
+    "universal-autorouter": "*"
   },
   "devDependencies": {
     "@hono/node-server": "^1.13.7",
@@ -36,6 +39,7 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.19.1",
+    "universal-autorouter": "^0.2.5",
     "vite": "^6.0.7"
   },
   "engines": {
