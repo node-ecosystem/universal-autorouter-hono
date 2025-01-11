@@ -2,7 +2,7 @@
 
 An plugin for [Hono](https://hono.dev) to add HMR (Hot Module Replacement) to Hono routes development.
 
-Required:
+Package required:
 - [universal-autorouter](https://github.com/node-ecosystem/universal-autorouter), used under the hood to autoload routes
 - [Vite](https://vite.dev), needed for _ViteDevServer instance_
 
