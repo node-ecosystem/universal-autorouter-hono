@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === 'production') {
   // autoloadRoutesOptions.viteDevServer = globalThis.__vikeNode!.viteDevServer
 }
 
-await autoloadRoutes(app, autoloadRoutesOptions)
+await autoloadRoutes(app, autoloadRoutesOptions as unknown as AutoloadRoutesOptions)
 
 const port = +(process.env.PORT || 3000)
 
