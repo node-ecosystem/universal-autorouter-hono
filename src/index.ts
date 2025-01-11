@@ -41,7 +41,7 @@ export default async (app: App, options: AutoloadRoutesOptions): Promise<Hono> =
 
   // Listen for changes in route files during development
   viteDevServer!.watcher.on('change', async (file: string) => {
-    if (file.startsWith(entryDir)) {
+    if (toPosix(file).startsWith(entryDir)) {
       const { default: handler } = await viteDevServer!.ssrLoadModule(file, { fixStacktrace: true })
       const posixFilepath = toPosix(file)
       const relativeFilepath = posixFilepath.replace(toPosix(entryDir), '')
