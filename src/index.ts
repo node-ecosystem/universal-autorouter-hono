@@ -7,12 +7,15 @@ type App = Hono & {
   injectHandler?: (method: string, route: string, handler: Function) => void
 }
 
-export default async (app: App, options: AutoloadRoutesOptions): Promise<Hono> => {
+export default async (app: App, options: AutoloadRoutesOptions & {
+  externalDirs?: string[]
+}): Promise<Hono> => {
   const {
     prefix = '',
     defaultMethod = DEFAULT_METHOD,
     routesDir = DEFAULT_ROUTES_DIR,
-    viteDevServer
+    viteDevServer,
+    externalDirs
   } = options
 
   const entryDir = path.isAbsolute(routesDir) ? toPosix(routesDir) : path.posix.join(process.cwd(), routesDir)
@@ -49,7 +52,12 @@ export default async (app: App, options: AutoloadRoutesOptions): Promise<Hono> =
     app.injectHandler!(method, route, handler)
   }
 
+  const externalDirsPaths = externalDirs?.map((dir) => path.isAbsolute(dir) ? toPosix(dir) : path.posix.join(process.cwd(), dir))
+
   const updateExternal = async (filepath: string) => {
+    if (externalDirsPaths && !externalDirsPaths.some((dir) => filepath.startsWith(dir))) {
+      return
+    }
     const dependentModules = viteDevServer!.moduleGraph.getModulesByFile(filepath) || []
     for (const mod of dependentModules) {
       for (const importer of mod.importers) {

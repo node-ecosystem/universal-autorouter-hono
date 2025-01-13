@@ -32,8 +32,10 @@ const autoloadRoutesOptions: AutoloadRoutesOptions = {
   pattern: '**/*.ts',
   // Prefix to add to routes
   prefix: '/api',
-  // Source directory of route files: use "relative" path
-  routesDir: path.resolve(import.meta.dirname, 'api')
+  // Source directory for route handler files
+  routesDir: path.resolve(import.meta.dirname, 'api'),
+  // Directories for files used by route handler files (as default scan all files)
+  externalDirs: ['utils']
 }
 if (process.env.NODE_ENV === 'production') {
   ({ default: autoloadRoutes } = await import('universal-autorouter'))
