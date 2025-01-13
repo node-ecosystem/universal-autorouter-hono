@@ -41,7 +41,7 @@ export default async (app: App, options: AutoloadRoutesOptions): Promise<Hono> =
 
   const updateHandler = async (filepath: string) => {
     const { default: handler } = await viteDevServer!.ssrLoadModule(filepath, { fixStacktrace: true })
-    const relativeFilepath = filepath.replace(toPosix(entryDir), '')
+    const relativeFilepath = filepath.replace(entryDir, '')
     const matchedFile = relativeFilepath.match(/\/?\((.*?)\)/)
     const method = matchedFile ? matchedFile[1] : defaultMethod
     const route = `${prefix}${filepathToRoute(relativeFilepath)}`
