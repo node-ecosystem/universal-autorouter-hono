@@ -39,17 +39,49 @@ export default async (app: App, options: AutoloadRoutesOptions): Promise<Hono> =
     app.hmrRoutes![`${method.toUpperCase()}${route}`] = handler
   }
 
-  // Listen for changes in route files during development
+  const updateHandler = async (filepath: string) => {
+    const { default: handler } = await viteDevServer!.ssrLoadModule(filepath, { fixStacktrace: true })
+    const relativeFilepath = filepath.replace(toPosix(entryDir), '')
+    const matchedFile = relativeFilepath.match(/\/?\((.*?)\)/)
+    const method = matchedFile ? matchedFile[1] : defaultMethod
+    const route = `${prefix}${filepathToRoute(relativeFilepath)}`
+    // Update (re-register) the route with the new handler
+    app.injectHandler!(method, route, handler)
+  }
+
+  const updateExternal = async (filepath: string) => {
+    const dependentModules = viteDevServer!.moduleGraph.getModulesByFile(filepath) || []
+    for (const mod of dependentModules) {
+      for (const importer of mod.importers) {
+        const importerFile = importer.file
+        if (importerFile) {
+          await (importerFile.startsWith(entryDir)
+            // Route file
+            ? updateHandler(importerFile)
+            // External file imported by route file
+            : updateExternal(importerFile))
+        }
+      }
+    }
+  }
+
+  const log = (type: string, filepath: string) => {
+    viteDevServer!.config.logger.info(`\u001B[2m${new Date().toLocaleTimeString()
+      }\u001B[22m \u001B[36m[autorouter]\u001B[39m \u001B[32mHMR update ${type
+      }\u001B[39m \u001B[2m${filepath.replace(viteDevServer!.config.root, '.')}\u001B[22m`)
+  }
+
+  // Listen for changes in route files
   viteDevServer!.watcher.on('change', async (file: string) => {
-    if (toPosix(file).startsWith(entryDir)) {
-      const { default: handler } = await viteDevServer!.ssrLoadModule(file, { fixStacktrace: true })
-      const posixFilepath = toPosix(file)
-      const relativeFilepath = posixFilepath.replace(toPosix(entryDir), '')
-      const matchedFile = relativeFilepath.match(/\/?\((.*?)\)/)
-      const method = matchedFile ? matchedFile[1] : defaultMethod
-      const route = `${prefix}${filepathToRoute(relativeFilepath)}`
-      // Update or re-register the route with the new handler
-      app.injectHandler!(method, route, handler)
+    const filepath = toPosix(file)
+    if (filepath.startsWith(entryDir)) {
+      // Route file
+      await updateHandler(filepath)
+      log('route', filepath)
+    } else {
+      // Handle changes to external files imported by the route files
+      await updateExternal(filepath)
+      log('file', filepath)
     }
   })
 
