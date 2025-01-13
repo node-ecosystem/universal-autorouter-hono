@@ -26,15 +26,15 @@ import type { AutoloadRoutesOptions } from 'universal-autorouter'
 const app = new Hono()
 
 let autoloadRoutes
-// Options of "universal-autorouter" package
-const autoloadRoutesOptions = {
+// Options of "universal-autorouter" or "universal-autorouter-hono" package
+const autoloadRoutesOptions: AutoloadRoutesOptions = {
   // Pattern to scan route files
   pattern: '**/*.ts',
   // Prefix to add to routes
   prefix: '/api',
   // Source directory of route files: use "relative" path
   routesDir: path.resolve(import.meta.dirname, 'api')
-} satisfies AutoloadRoutesOptions
+}
 if (process.env.NODE_ENV === 'production') {
   ({ default: autoloadRoutes } = await import('universal-autorouter'))
   autoloadRoutesOptions.pattern = '**/*.mjs'
