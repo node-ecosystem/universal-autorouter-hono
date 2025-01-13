@@ -3832,7 +3832,7 @@ __metadata:
     tsx: "npm:^4.19.2"
     typescript: "npm:^5.7.3"
     typescript-eslint: "npm:^8.19.1"
-    universal-autorouter: "npm:^0.2.5"
+    universal-autorouter: "npm:^0.2.6"
     vite: "npm:^6.0.7"
   peerDependencies:
     hono: "*"
@@ -3840,10 +3840,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"universal-autorouter@npm:^0.2.5":
-  version: 0.2.5
-  resolution: "universal-autorouter@npm:0.2.5"
-  checksum: 10c0/90415a9b191827fef63037c6518ef6e9aea31afd013b5097688dd2f58aedc2011bb3bb1ef2215e75d2ae6b4076671690454f610849389534ff2b733ba3d5e3b6
+"universal-autorouter@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "universal-autorouter@npm:0.2.6"
+  peerDependencies:
+    vite: "*"
+  peerDependenciesMeta:
+    vite:
+      optional: true
+  checksum: 10c0/63771ab54b9245bb96520f991a3716706e9289c44a7ffb29c80afa1f1500e21d530f8f36d4551fe59b1ac03722dc04e0fec56277d0303109fbf458f22ab36d46
   languageName: node
   linkType: hard
 

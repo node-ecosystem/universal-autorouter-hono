@@ -27,16 +27,14 @@ const app = new Hono()
 
 let autoloadRoutes
 // Options of "universal-autorouter" package
-const autoloadRoutesOptions: AutoloadRoutesOptions = {
+const autoloadRoutesOptions = {
   // Pattern to scan route files
   pattern: '**/*.ts',
   // Prefix to add to routes
   prefix: '/api',
   // Source directory of route files: use "relative" path
   routesDir: path.resolve(import.meta.dirname, 'api')
-} as Omit<AutoloadRoutesOptions, 'viteDevServer'> & {
-  viteDevServer: import('vite').ViteDevServer
-}
+} satisfies AutoloadRoutesOptions
 if (process.env.NODE_ENV === 'production') {
   ({ default: autoloadRoutes } = await import('universal-autorouter'))
   autoloadRoutesOptions.pattern = '**/*.mjs'
@@ -48,7 +46,7 @@ if (process.env.NODE_ENV === 'production') {
   // autoloadRoutesOptions.viteDevServer = globalThis.__vikeNode!.viteDevServer
 }
 
-await autoloadRoutes(app, autoloadRoutesOptions as unknown as AutoloadRoutesOptions)
+await autoloadRoutes(app, autoloadRoutesOptions)
 
 const port = +(process.env.PORT || 3000)
 
