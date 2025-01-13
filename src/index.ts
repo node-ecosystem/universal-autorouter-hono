@@ -21,7 +21,7 @@ export default async (app: App, options: AutoloadRoutesOptions): Promise<Hono> =
   // Should be registered before autoloading routes
   app.use(`${prefix}/*`, async (c, next) => {
     const { incoming: { method, url } } = c.env as { incoming: { method: string, url: string } }
-    const handler = app.hmrRoutes![`${method}${url}`]
+    const handler = app.hmrRoutes![`${method}${url.split('?')[0]}`]
     if (handler) {
       return await handler(c) // Invoke the dynamic handler if found
     }
